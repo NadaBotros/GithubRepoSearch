@@ -1,32 +1,54 @@
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
+import {
+    Container,
+    Typography,
+    TextField,
+    Button,
+    Box,
+    Paper
+} from "@mui/material";
 
 export const GithubUserNameComponent = () => {
     const navigate = useNavigate();
-    // Use useState to manage the username input
     const [username, setUsername] = useState('');
 
-    // Handle input Submission and validation
-    // once the user clicks the button, we will navigate to the user page in case the username is valid
+    // This function handles the submission of the username form.
+    // It checks if the username is valid and navigates to the user's profile page.
     const handleSubmit = () => {
         if (username.trim() === '') {
             alert('Please enter a valid username');
             return;
         }
-        console.log('Fetching profile for:', username);
         navigate(`/user/${username}`);
-    }
+    };
 
     return (
-        <div>
-            <h1>Github User Name</h1>
-            <p>Enter your Github username to fetch your profile information.</p>
-            <input
-                type="text"
-                placeholder="Github Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}/>
-            <button onClick={handleSubmit}>Fetch Profile</button>
-        </div>
-    )
-}
+        <Container maxWidth="sm" sx={{mt: 10}}>
+            <Paper elevation={3} sx={{p: 4}}>
+                <Typography variant="h4" gutterBottom>
+                    GitHub User Lookup
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                    Enter a GitHub username to fetch their public profile and repositories.
+                </Typography>
+
+                <Box sx={{mt: 3, display: 'flex', gap: 2}}>
+                    <TextField
+                        fullWidth
+                        label="GitHub Username"
+                        variant="outlined"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleSubmit();
+                        }}
+                    />
+                    <Button variant="contained" onClick={handleSubmit}>
+                        Search
+                    </Button>
+                </Box>
+            </Paper>
+        </Container>
+    );
+};
