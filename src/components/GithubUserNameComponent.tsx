@@ -15,6 +15,14 @@ export const GithubUserNameComponent = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
 
+    /*
+    * This function handles the submission of the username.
+    * It trims the username, checks if it's valid,
+    * fetches the user data, and navigates to the user page.
+    * If the username is invalid or the user is not found,
+    * it shows an alert.
+    * @returns {Promise<void>}
+     */
     const handleSubmit = async () => {
         const trimmedUsername = username.trim();
         if (!trimmedUsername) {

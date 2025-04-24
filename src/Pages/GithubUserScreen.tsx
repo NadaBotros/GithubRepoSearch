@@ -17,6 +17,12 @@ export const GithubUserScreen: React.FC = () => {
     const [userLoading, setUserLoading] = useState(true);
     const [userData, setUserData] = useState<UserModel | null>(null);
 
+    /*
+        * This function loads user data when the component mounts or when the username changes.
+        * It fetches the user data from the API and updates the state.
+        * If the username is not provided, it does nothing.
+        * @returns {Promise<void>}
+     */
     useEffect(() => {
         const loadUser = async () => {
             if (!username) return;
