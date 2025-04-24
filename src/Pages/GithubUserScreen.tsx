@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import {GitHubRepoModel, UserModel} from '../Models/GithubModels';
 import {GithubUserProfile} from '../components/GithubUserProfileComponent';
-import {GithubRepoList} from '../components/GithubUserReposListComponent';
+import {GithubUserReposListComponent} from '../components/GithubUserReposListComponent';
 import {useParams} from 'react-router-dom';
 import {GetReposHook} from "../Hooks/GetReposHook";
 import {PAGE_SIZE} from "../Helpers/Constants";
@@ -60,7 +60,7 @@ export const GithubUserScreen: React.FC = () => {
                     />
                 </Grid>
                 <Grid item xs={12} md={8}>
-                    <GithubRepoList repos={repos}/>
+                    <GithubUserReposListComponent repos={repos}/>
                 </Grid>
             </Grid>
         </Container>

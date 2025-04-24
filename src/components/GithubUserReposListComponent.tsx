@@ -16,7 +16,7 @@ interface Props {
     repos: GitHubRepoModel[];
 }
 
-export const GithubRepoList: React.FC<Props> = ({repos}) => {
+export const GithubUserReposListComponent: React.FC<Props> = ({repos}) => {
     const [searchQuery, setSearchQuery] = useState("");
 
     const filteredRepos = repos.filter((repo) =>
