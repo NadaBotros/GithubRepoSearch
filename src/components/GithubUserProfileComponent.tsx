@@ -4,7 +4,6 @@ interface Props {
     name: string;
     login: string;
     bio: string;
-    email: string;
     avatarUrl: string;
     githubUrl: string;
 }
@@ -13,7 +12,6 @@ export const GithubUserProfile: React.FC<Props> = ({
                                                        name,
                                                        login,
                                                        bio,
-                                                       email,
                                                        avatarUrl,
                                                        githubUrl,
                                                    }) => {
@@ -25,7 +23,6 @@ export const GithubUserProfile: React.FC<Props> = ({
                     <Typography variant="h6">{name}</Typography>
                     <Typography variant="body2" color="text.secondary">@{login}</Typography>
                     <Typography variant="body2">{bio}</Typography>
-                    <Typography variant="body2" color="text.secondary">{email}</Typography>
                     <Button
                         variant="outlined"
                         href={githubUrl}

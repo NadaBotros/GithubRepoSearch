@@ -2,22 +2,21 @@
 import {getUserDataRequest} from "../API/GithubAPIs.ts";
 import {mapUser} from "../Mappers/MapUserDate.ts";
 import {useGithubStore} from "../Hooks/useGithubStore.ts";
-import {UserModelModel} from "../Models/GithubModels.ts";
+import {UserModel} from "../Models/GithubModels.ts";
 
-export const fetchAndStoreUserData = async (username: string): Promise<boolean> => {
+export const fetchAndStoreUserData = async (username: string): Promise<UserModel> => {
     try {
         const res = await getUserDataRequest(username);
-        console.log("User data response:", res);
-        if (!res) return false;
-
-        const mappedUser: UserModelModel = mapUser(res);
+        if (!res) {
+            return {} as UserModel;
+        }
+        const mappedUser: UserModel = mapUser(res);
 
         const {setUserData} = useGithubStore.getState();
         setUserData?.(mappedUser);
-        console.log("User data fetched and stored:", mappedUser);
-        return true;
+        return mappedUser;
     } catch (error) {
         console.error("Error fetching user data:", error);
-        return false;
+        return {} as UserModel;
     }
 };

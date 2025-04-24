@@ -1,6 +1,6 @@
 import {persist} from 'zustand/middleware';
 import {create} from "zustand/react";
-import {GitHubRepoModel, UserModelModel} from "../Models/GithubModels.ts";
+import {GitHubRepoModel, UserModel} from "../Models/GithubModels.ts";
 
 const localStorageKey = 'githubStore';
 
@@ -8,10 +8,10 @@ interface GithubState {
     repos: GitHubRepoModel[];
     getRepos: () => GitHubRepoModel[];
     setRepos: (newRepos: GitHubRepoModel[]) => void;
-    userData?: UserModelModel;
-    setUserData?: (userData: UserModelModel) => void;
-    getUserData?: () => UserModelModel | undefined;
-    repoPageNumber?: number;
+    userData: UserModel | undefined;
+    setUserData: (userData: UserModel) => void;
+    getUserData: () => UserModel | undefined;
+    repoPageNumber: number;
     setRepoPageNumber: (pageNumber: number) => void;
     getRepoPageNumber: () => number | undefined;
 }

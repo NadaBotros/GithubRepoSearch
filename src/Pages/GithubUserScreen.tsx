@@ -1,35 +1,61 @@
+import {useEffect, useState} from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import {GitHubRepoModel} from '../Models/GithubModels';
+import {GitHubRepoModel, UserModel} from '../Models/GithubModels';
 import {GithubUserProfile} from '../components/GithubUserProfileComponent';
 import {GithubRepoList} from '../components/GithubUserReposListComponent';
 import {useParams} from 'react-router-dom';
-import {GetReposHook} from '../Hooks/GetReposHook';
+import {GetReposHook} from "../Hooks/GetReposHook";
+import {PAGE_SIZE} from "../Helpers/Constants";
+import {fetchAndStoreUserData} from "../Helpers/GetUserData.ts";
 
-interface Props {
-    userName: string;
-}
-
-export const GithubUserScreen: React.FC<Props> = ({userName}) => {
+export const GithubUserScreen: React.FC = () => {
     const {username} = useParams();
-    GetReposHook(username as string, 100);
+
+    const {getRepos, loading: reposLoading} = GetReposHook(username as string, PAGE_SIZE);
+
+    const [userLoading, setUserLoading] = useState(true);
+    const [userData, setUserData] = useState<UserModel | null>(null);
+
+    useEffect(() => {
+        const loadUser = async () => {
+            if (!username) return;
+            setUserLoading(true);
+            try {
+                const user = await fetchAndStoreUserData(username);
+                setUserData(user);
+            } catch (error) {
+                console.error("Error loading user:", error);
+                setUserData(null);
+            } finally {
+                setUserLoading(false);
+            }
+        };
+
+        loadUser();
+    }, [username]);
+
+    const repos: GitHubRepoModel[] = getRepos();
+
+    if (userLoading || reposLoading) return <div>Loading...</div>;
+
+    if (!userData) return <div>No user data found</div>;
 
     return (
         <Container maxWidth="lg" sx={{mt: 4}}>
             <Grid container spacing={4}>
-                {/*<Grid item xs={12} md={4}>*/}
-                {/*    <GithubUserProfile*/}
-                {/*        name={user.name}*/}
-                {/*        login={user.login}*/}
-                {/*        bio={user.bio}*/}
-                {/*        email={user.email}*/}
-                {/*        avatarUrl={user.avatar_url}*/}
-                {/*        githubUrl={user.html_url}*/}
-                {/*    />*/}
-                {/*</Grid>*/}
-                {/*<Grid item xs={12} md={8}>*/}
-                {/*    <GithubRepoList repos={repos}/>*/}
-                {/*</Grid>*/}
+                <Grid item xs={12} md={4}>
+                    <GithubUserProfile
+                        name={userData.name}
+                        login={userData.login}
+                        bio={userData.bio}
+                        avatarUrl={userData.avatar_url}
+                        githubUrl={userData.html_url}
+                    />
+                </Grid>
+                <Grid item xs={12} md={8}>
+                    <GithubRepoList repos={repos}/>
+                </Grid>
             </Grid>
         </Container>
     );

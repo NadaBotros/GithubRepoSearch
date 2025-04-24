@@ -9,27 +9,41 @@ import {
     Box,
 } from "@mui/material";
 import {GitHubRepoModel} from "../Models/GithubModels";
+import {RepoSearchBar} from "./RepoSearchBar";
+import {useState} from "react";
 
 interface Props {
     repos: GitHubRepoModel[];
 }
 
 export const GithubRepoList: React.FC<Props> = ({repos}) => {
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const filteredRepos = repos.filter((repo) =>
+        repo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (repo.language && repo.language.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+
     return (
         <Card>
             <CardContent>
                 <Typography variant="h6" gutterBottom>
-                    Repositories ({repos.length})
+                    Repositories ({filteredRepos.length})
                 </Typography>
+
+                {/* Search Bar */}
+                <RepoSearchBar searchQuery={searchQuery} onSearchChange={setSearchQuery}/>
+
+                {/* Repo List */}
                 <List>
-                    {repos.map((repo) => (
+                    {filteredRepos.map((repo) => (
                         <ListItem
                             key={repo.id}
-                            
                             component="a"
                             href={repo.html_url}
                             target="_blank"
                             divider
+                            sx={{width: "50rem"}}
                         >
                             <ListItemText
                                 primary={
@@ -38,15 +52,18 @@ export const GithubRepoList: React.FC<Props> = ({repos}) => {
                                     </Typography>
                                 }
                                 secondary={
-                                    <Box sx={{mt: 0.5}}>
-                                        <Chip
-                                            label={repo.language || "Unknown"}
-                                            variant="outlined"
-                                            size="small"
-                                            sx={{fontSize: "0.75rem"}}
-                                        />
-                                    </Box>
+                                    <Typography component="div" variant="body2" color="text.secondary">
+                                        <Box sx={{mt: 0.5}}>
+                                            <Chip
+                                                label={repo.language || "Unknown"}
+                                                variant="outlined"
+                                                size="small"
+                                                sx={{fontSize: "0.75rem"}}
+                                            />
+                                        </Box>
+                                    </Typography>
                                 }
+                                sx={{width: '100%'}}
                             />
                         </ListItem>
                     ))}
