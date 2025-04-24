@@ -1,56 +1,44 @@
-# React + TypeScript + Vite
+📘 **GitHub Repo Viewer**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive React + TypeScript application that allows users to enter a GitHub username and view their public profile
+and repositories.
+Users can search/filter repositories by name or language. Built with Material UI, Zustand, Vitest, and Vite.
 
-Currently, two official plugins are available:
+🚀 **Features**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Search GitHub users and view profile data
+2. List of public repositories with repo name + language
+3. Filter repositories by name or language
+4. Tested with Vitest + Testing Library
+5. Built using Material UI following Laws of UX
 
-## Expanding the ESLint configuration
+🧑‍💻 **Getting Started**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Clone the Repository
+   `git clone https://github.com/NadaBotros/GithubRepoSearch.git`
+2. Navigate to the Project Directory
+   `cd github-repo-search`
+3. Install Dependencies
+   `npm install`
+4. Run the App Locally
+   `npm run dev`
+   Then visit:
+   📍 http://localhost:5173
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+✅ **Running the Tests**
+This project uses Vitest and Testing Library for testing.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Run all tests:
+   `npx vitest`
+2. Run tests in watch mode:
+   `npx vitest --watch`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+🌱 **Future Improvements**
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
-# GithubRepoSearch
-# GithubRepoSearch
+* Pagination for repositories
+* Group repositories by language
+* Theme switcher (dark/light mode)
+* GitHub user existence check before navigation
+* Optional GitHub Auth (to access private repos)
+
+**Made by Nada Botros**
