@@ -1,3 +1,4 @@
+// src/components/GithubUserNameComponent.tsx
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {
@@ -8,19 +9,26 @@ import {
     Box,
     Paper
 } from "@mui/material";
+import {fetchAndStoreUserData} from "../Helpers/GetUserData.ts";
 
 export const GithubUserNameComponent = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
 
-    // This function handles the submission of the username form.
-    // It checks if the username is valid and navigates to the user's profile page.
-    const handleSubmit = () => {
-        if (username.trim() === '') {
-            alert('Please enter a valid username');
+    const handleSubmit = async () => {
+        const trimmedUsername = username.trim();
+        if (!trimmedUsername) {
+            alert("Please enter a valid GitHub username.");
             return;
         }
-        navigate(`/user/${username}`);
+
+        const success = await fetchAndStoreUserData(trimmedUsername);
+        if (!success) {
+            alert("User not found.");
+            return;
+        }
+
+        navigate(`/user/${trimmedUsername}`);
     };
 
     return (

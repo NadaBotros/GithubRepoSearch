@@ -11,6 +11,9 @@ interface GithubState {
     userData?: UserModelModel;
     setUserData?: (userData: UserModelModel) => void;
     getUserData?: () => UserModelModel | undefined;
+    repoPageNumber?: number;
+    setRepoPageNumber: (pageNumber: number) => void;
+    getRepoPageNumber: () => number | undefined;
 }
 
 
@@ -33,10 +36,22 @@ export const useGithubStore = create<GithubState>()(
                 const {userData} = get();
                 return userData;
             },
+            repoPageNumber: 0,
+            setRepoPageNumber: (pageNumber) => {
+                set({repoPageNumber: pageNumber});
+            },
+            getRepoPageNumber: () => {
+                const {repoPageNumber} = get();
+                return repoPageNumber;
+            },
         }),
         {
             name: localStorageKey,
-            partialize: (state) => ({repos: state.repos}),
+            partialize: (state) => ({
+                repos: state.repos,
+                userData: state.userData,
+                repoPageNumber: state.repoPageNumber,
+            }),
         },
     ),
 );
